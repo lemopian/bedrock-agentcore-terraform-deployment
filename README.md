@@ -17,9 +17,12 @@ Both modules follow the same design principles:
 
 ## Quick Start
 
-### ZIP Deployment
+### Local Module Usage
+
+Using modules from a local copy of this repository:
 
 ```hcl
+# ZIP Deployment
 module "agentcore_runtime" {
   source = "./modules/zip"
 
@@ -27,11 +30,8 @@ module "agentcore_runtime" {
   region              = "us-west-2"
   runtime_source_path = "./app"
 }
-```
 
-### Container Deployment
-
-```hcl
+# Container Deployment
 module "agentcore_runtime" {
   source = "./modules/container"
 
@@ -40,6 +40,41 @@ module "agentcore_runtime" {
   container_source_path = "./app"
 }
 ```
+
+### Remote Module Usage
+
+Using modules directly from GitHub:
+
+```hcl
+# ZIP Deployment - from main branch
+module "agentcore_runtime" {
+  source = "git::https://github.com/lemopian/bedrock-agentcore-terraform-deployment.git//modules/zip?ref=main"
+
+  agent_name          = "my-agent"
+  region              = "us-west-2"
+  runtime_source_path = "./app"
+}
+
+# ZIP Deployment - from specific version tag
+module "agentcore_runtime" {
+  source = "git::https://github.com/lemopian/bedrock-agentcore-terraform-deployment.git//modules/zip?ref=v1.0.0"
+
+  agent_name          = "my-agent"
+  region              = "us-west-2"
+  runtime_source_path = "./app"
+}
+
+# Container Deployment - from main branch
+module "agentcore_runtime" {
+  source = "git::https://github.com/lemopian/bedrock-agentcore-terraform-deployment.git//modules/container?ref=main"
+
+  agent_name            = "my-agent"
+  region                = "us-west-2"
+  container_source_path = "./app"
+}
+```
+
+**Note:** Using version tags (e.g., `ref=v1.0.0`) is recommended for production to ensure stability.
 
 ## Module Features
 
